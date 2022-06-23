@@ -20,4 +20,19 @@ describe('Search - Unit', () => {
     expect(wrapper.emitted().doSearch.length).toBe(1);
     expect(wrapper.emitted().doSearch[0]).toEqual([{ term }]);
   });
+
+  it('Should emit search event when search input is cleared', async () => {
+    const wrapper = mount(Search);
+
+    const input = wrapper.find('input[type="search"]');
+
+    const term = 'termo para busca';
+
+    await input.setValue(term);
+    await input.setValue('');
+
+    expect(wrapper.emitted().doSearch).toBeTruthy();
+    expect(wrapper.emitted().doSearch.length).toBe(1);
+    expect(wrapper.emitted().doSearch[0]).toEqual([{ term: '' }]);
+  });
 });

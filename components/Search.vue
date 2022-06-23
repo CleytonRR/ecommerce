@@ -29,6 +29,13 @@ export default {
       term: '',
     };
   },
+  watch: {
+    term() {
+      if (this.term === '') {
+        this.doSearch();
+      }
+    },
+  },
   methods: {
     doSearch() {
       this.$emit('doSearch', { term: this.term });
