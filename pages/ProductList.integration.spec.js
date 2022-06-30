@@ -97,7 +97,7 @@ describe('ProductList - integration', () => {
 
     // Act
     const search = wrapper.findComponent(Search);
-    search.find('input[type="search"]').setValue('relógio');
+    await search.find('input[type="search"]').setValue('relógio');
 
     await search.find('form').trigger('submit');
 
