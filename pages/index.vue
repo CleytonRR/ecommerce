@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     setSearchTerm({ term }) {
-      this.setSearchTerm = term;
+      this.searchTerm = term;
     },
   },
 };
