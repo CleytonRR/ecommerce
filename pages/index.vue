@@ -33,6 +33,11 @@ export default {
   },
   computed: {
     list() {
+      if (this.searchTerm !== '') {
+        return this.products.filter(({ title }) => {
+          return title.includes(this.searchTerm);
+        });
+      }
       return this.products;
     },
   },

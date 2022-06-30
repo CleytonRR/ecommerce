@@ -102,8 +102,8 @@ describe('ProductList - integration', () => {
     await search.find('form').trigger('submit');
 
     // Assert
-    // const cards = wrapper.findAllComponents(ProductCard);
+    const cards = wrapper.findAllComponents(ProductCard);
     expect(wrapper.vm.searchTerm).toEqual('relógio');
-    // expect(cards).toHaveLength(2);
+    expect(cards).toHaveLength(2);
   });
 });
