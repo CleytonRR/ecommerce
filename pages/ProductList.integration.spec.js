@@ -20,6 +20,20 @@ describe('ProductList - integration', () => {
     server.shutdown();
   });
 
+  const getProducts = () => {
+    const products = [
+      ...server.createList('product', 10),
+      server.create('product', {
+        title: 'Meu relógio amado',
+      }),
+      server.create('product', {
+        title: 'Meu relógio amado',
+      }),
+    ];
+
+    return products;
+  };
+
   it('Should mount the component', () => {
     const wrapper = mount(ProductList);
 
@@ -75,15 +89,7 @@ describe('ProductList - integration', () => {
 
   it('Should filter the product list when a search is perfomed', async () => {
     // Arrange
-    const products = [
-      ...server.createList('product', 10),
-      server.create('product', {
-        title: 'Meu relógio amado',
-      }),
-      server.create('product', {
-        title: 'Meu outro relógio estimado',
-      }),
-    ];
+    const products = getProducts();
 
     axios.get.mockReturnValue(Promise.resolve({ data: { products } }));
 
