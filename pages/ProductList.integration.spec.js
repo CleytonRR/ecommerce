@@ -20,15 +20,17 @@ describe('ProductList - integration', () => {
     server.shutdown();
   });
 
-  const getProducts = () => {
+  const getProducts = (quantity = 10, overrides = []) => {
+    let overrideList = [];
+
+    if (overrides.length > 0) {
+      overrideList = overrides.map((override) =>
+        server.create('product', override)
+      );
+    }
     const products = [
-      ...server.createList('product', 10),
-      server.create('product', {
-        title: 'Meu relógio amado',
-      }),
-      server.create('product', {
-        title: 'Meu relógio amado',
-      }),
+      ...server.createList('product', quantity),
+      ...overrideList,
     ];
 
     return products;
@@ -89,7 +91,14 @@ describe('ProductList - integration', () => {
 
   it('Should filter the product list when a search is perfomed', async () => {
     // Arrange
-    const products = getProducts();
+    const products = getProducts(10, [
+      {
+        title: 'Meu relógio amado',
+      },
+      {
+        title: 'Meu relógio estimado',
+      },
+    ]);
 
     axios.get.mockReturnValue(Promise.resolve({ data: { products } }));
 
@@ -115,12 +124,11 @@ describe('ProductList - integration', () => {
 
   it('Should filter the product list when a search is perfomed', async () => {
     // Arrange
-    const products = [
-      ...server.createList('product', 10),
-      server.create('product', {
+    const products = getProducts(10, [
+      {
         title: 'Meu relógio amado',
-      }),
-    ];
+      },
+    ]);
 
     axios.get.mockReturnValue(Promise.resolve({ data: { products } }));
 
