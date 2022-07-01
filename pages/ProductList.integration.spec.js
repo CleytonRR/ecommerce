@@ -59,7 +59,7 @@ describe('ProductList - integration', () => {
   });
 
   it('Should mount the ProductCard component 10 times', async () => {
-    const products = server.createList('product', 10);
+    const products = getProducts();
 
     axios.get.mockReturnValue(Promise.resolve({ data: { products } }));
 
