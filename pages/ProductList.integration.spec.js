@@ -18,6 +18,7 @@ describe('ProductList - integration', () => {
 
   afterEach(() => {
     server.shutdown();
+    jest.clearAllMocks();
   });
 
   const getProducts = (quantity = 10, overrides = []) => {
@@ -60,23 +61,19 @@ describe('ProductList - integration', () => {
     return { wrapper, products };
   };
 
-  it('Should mount the component', () => {
-    const wrapper = mount(ProductList);
+  it('Should mount the component', async () => {
+    const { wrapper } = await mountProductList();
 
     expect(wrapper.vm).toBeDefined();
   });
 
-  it('Should mount the Search component as a child', () => {
-    const wrapper = mount(ProductList);
+  it('Should mount the Search component as a child', async () => {
+    const { wrapper } = await mountProductList();
     expect(wrapper.findComponent(Search)).toBeDefined();
   });
 
-  it('Should call axios.get on component mount', () => {
-    mount(ProductList, {
-      mocks: {
-        $axios: axios,
-      },
-    });
+  it('Should call axios.get on component mount', async () => {
+    await mountProductList();
 
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith('/api/products');
@@ -89,16 +86,7 @@ describe('ProductList - integration', () => {
   });
 
   it('Should display the error message when Promise rejects', async () => {
-    axios.get.mockReturnValue(Promise.reject(new Error('')));
-
-    const wrapper = mount(ProductList, {
-      mocks: {
-        $axios: axios,
-      },
-    });
-
-    await Vue.nextTick();
-
+    const { wrapper } = await mountProductList(10, [], true);
     expect(wrapper.text()).toContain('Problemas ao carregar a lista');
   });
 
@@ -128,22 +116,13 @@ describe('ProductList - integration', () => {
 
   it('Should filter the product list when a search is perfomed', async () => {
     // Arrange
-    const products = getProducts(10, [
+    const overrides = [
       {
         title: 'Meu relógio amado',
       },
-    ]);
+    ];
 
-    axios.get.mockReturnValue(Promise.resolve({ data: { products } }));
-
-    const wrapper = mount(ProductList, {
-      mocks: {
-        $axios: axios,
-      },
-    });
-
-    await Vue.nextTick();
-
+    const { wrapper } = await mountProductList(10, overrides);
     // Act
     const search = wrapper.findComponent(Search);
     await search.find('input[type="search"]').setValue('relógio');
