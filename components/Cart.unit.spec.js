@@ -7,4 +7,14 @@ describe('Cart', () => {
 
     expect(wrapper.vm).toBeDefined();
   });
+
+  it('Should emit close event when button gets clicked', async () => {
+    const wrapper = mount(Cart);
+    const button = wrapper.find('[data-testid="close-button"]');
+
+    await button.trigger('click');
+
+    expect(wrapper.emitted().close).toBeTruthy();
+    expect(wrapper.emitted().close).toHaveLength(1);
+  });
 });
