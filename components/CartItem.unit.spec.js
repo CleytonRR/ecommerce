@@ -43,4 +43,12 @@ describe('CartItem', () => {
     expect(content).toContain(title);
     expect(content).toContain(price);
   });
+
+  it('Should display quantity 1 when product ios first displayed', () => {
+    const { wrapper } = mountCartItem();
+
+    const quantity = wrapper.find('[data-testid="quantity"]');
+
+    expect(quantity.text()).toContain('1');
+  });
 });
