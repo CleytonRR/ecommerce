@@ -65,4 +65,25 @@ describe('CartItem', () => {
     await button.trigger('click');
     expect(quantity.text()).toContain('4');
   });
+
+  it('Should decrease quantity when - button gets clicked', async () => {
+    const { wrapper } = mountCartItem();
+
+    const quantity = wrapper.find('[data-testid="quantity"]');
+    const button = wrapper.find('[data-testid="-"]');
+
+    await button.trigger('click');
+    expect(quantity.text()).toContain('0');
+  });
+
+  it('Should not go below zero when button - is repeatedly clicked', async () => {
+    const { wrapper } = mountCartItem();
+
+    const quantity = wrapper.find('[data-testid="quantity"]');
+    const button = wrapper.find('[data-testid="-"]');
+
+    await button.trigger('click');
+    await button.trigger('click');
+    expect(quantity.text()).toContain('0');
+  });
 });
