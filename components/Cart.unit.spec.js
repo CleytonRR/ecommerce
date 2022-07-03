@@ -34,4 +34,10 @@ describe('Cart', () => {
 
     expect(wrapper.classes()).not.toContain('hidden');
   });
+
+  it('Should display "Cart is empty" when there are not products', () => {
+    const wrapper = mount(Cart);
+
+    expect(wrapper.text()).toContain('Cart is empty');
+  });
 });
