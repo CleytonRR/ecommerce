@@ -15,6 +15,7 @@ describe('Cart', () => {
     await button.trigger('click');
 
     expect(wrapper.emitted().close).toBeTruthy();
+    expect(wrapper.emitted().close).toBeDefined();
     expect(wrapper.emitted().close).toHaveLength(1);
   });
 
