@@ -9,7 +9,11 @@
       <div class="mx-3">
         <h3 class="text-sm text-gray-600">${{ product.title }}</h3>
         <div class="flex items-center mt-2">
-          <button class="text-gray-500 focus:outline-none focus:text-gray-600">
+          <button
+            data-testid="+"
+            class="text-gray-500 focus:outline-none focus:text-gray-600"
+            @click="quantity++"
+          >
             <svg
               class="h-5 w-5"
               fill="none"
