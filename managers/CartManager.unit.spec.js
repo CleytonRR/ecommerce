@@ -1,23 +1,37 @@
 import { CartManager } from '@/managers/CartManager';
+import { makeServer } from '@/miragejs/server';
 
 describe('CartManager', () => {
-  it('Should set cart to open', () => {
-    const manager = new CartManager();
+  let server;
+  const manager = new CartManager();
+  beforeEach(() => {
+    server = makeServer({ environment: 'test' });
+  });
 
+  afterEach(() => {
+    server.shutdown();
+  });
+
+  it('Should set cart to open', () => {
     const state = manager.open();
 
     expect(state.open).toBe(true);
   });
 
   it('Should set cart to closed', () => {
-    const manager = new CartManager();
-
     const state = manager.close();
 
     expect(state.open).toBe(false);
   });
 
-  it.todo('Should add product to the cart only once');
+  it('Should add product to the cart only once', () => {
+    const product = server.create('product');
+
+    manager.addProduct(product);
+    const state = manager.addProduct(product);
+
+    expect(state.items).toHaveLength(1);
+  });
 
   it.todo('Should remove product from the cart');
 
