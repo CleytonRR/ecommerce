@@ -39,5 +39,11 @@ describe('CartManager', () => {
 
   it.todo('should return true if cart is not empty');
 
-  it.todo('Should return true if product is already in the cart');
+  it('Should return true if product is already in the cart', () => {
+    const product = server.create('product');
+
+    manager.addProduct(product);
+
+    expect(manager.productIsInTheCart(product)).toBeTruthy();
+  });
 });
