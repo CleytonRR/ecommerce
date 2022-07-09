@@ -41,7 +41,30 @@ describe('CartManager', () => {
     expect(state.items).toHaveLength(0);
   });
 
-  it.todo('Should clear products');
+  it('Should clear products', () => {
+    const product1 = server.create('product');
+    const product2 = server.create('product');
+
+    manager.addProduct(product1);
+    manager.addProduct(product2);
+
+    const state = manager.clearProducts();
+
+    expect(state.items).toHaveLength(0);
+  });
+
+  it('Should clear cart', () => {
+    const product1 = server.create('product');
+    const product2 = server.create('product');
+
+    manager.addProduct(product1);
+    manager.addProduct(product2);
+
+    const state = manager.clearCart();
+
+    expect(state.items).toHaveLength(0);
+    expect(state.open).toBe(false);
+  });
 
   it.todo('should return true if cart is not empty');
 
