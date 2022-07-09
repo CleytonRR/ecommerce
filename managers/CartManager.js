@@ -36,6 +36,10 @@ export class CartManager {
     return this.state;
   }
 
+  hasProducts() {
+    return this.state.items.length > 0;
+  }
+
   removeProduct(productId) {
     this.state.items = [
       ...this.state.items.filter((product) => product.id !== productId),
