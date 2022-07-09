@@ -29,7 +29,7 @@ export class CartManager {
   }
 
   productIsInTheCart(product) {
-    return !!this.state.items.find(({ id }) => id === product.id);
+    return this.state.items.some(({ id }) => id === product.id);
   }
 
   addProduct(product) {
