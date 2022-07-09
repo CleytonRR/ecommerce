@@ -12,6 +12,10 @@ export class CartManager {
     this.state = Vue.observable(initialState);
   }
 
+  getState() {
+    return this.state;
+  }
+
   open() {
     this.state.open = true;
 
