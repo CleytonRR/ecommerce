@@ -144,4 +144,11 @@ describe('ProductList - integration', () => {
     expect(label.exists()).toBe(true);
     expect(label.text()).toEqual('27 Products');
   });
+
+  it('Should display product (singular) when there is only 1 product', async () => {
+    const { wrapper } = await mountProductList(1);
+
+    const label = wrapper.find('[data-testid="total-quantity-label"]');
+    expect(label.text()).toEqual('1 Product');
+  });
 });
