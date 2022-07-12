@@ -1,7 +1,9 @@
+import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import Cart from '@/components/Cart';
 import CartItem from '@/components/CartItem';
 import { makeServer } from '@/miragejs/server';
+import { CartManager } from '@/managers/CartManager';
 
 describe('Cart', () => {
   let server;
@@ -13,14 +15,29 @@ describe('Cart', () => {
     server.shutdown();
   });
 
+  const mountCart = () => {
+    const products = server.createList('product', 2);
+    const cartManager = new CartManager();
+    const wrapper = mount(Cart, {
+      propsData: {
+        products,
+      },
+      mocks: {
+        $cart: cartManager,
+      },
+    });
+
+    return { wrapper, products, cartManager };
+  };
+
   it('Should mount the component', () => {
-    const wrapper = mount(Cart);
+    const { wrapper } = mountCart();
 
     expect(wrapper.vm).toBeDefined();
   });
 
   it('Should emit close event when button gets clicked', async () => {
-    const wrapper = mount(Cart);
+    const { wrapper } = mountCart();
     const button = wrapper.find('[data-testid="close-button"]');
 
     await button.trigger('click');
@@ -31,23 +48,29 @@ describe('Cart', () => {
   });
 
   it('Should hide the cart when no prop isOpen is passed', () => {
-    const wrapper = mount(Cart);
+    const { wrapper } = mountCart();
 
     expect(wrapper.classes()).toContain('hidden');
   });
 
-  it('Should display the cart when prop isOpen is passed', () => {
-    const wrapper = mount(Cart, {
-      propsData: {
-        isOpen: true,
-      },
+  it('Should display the cart when prop isOpen is passed', async () => {
+    const { wrapper } = mountCart();
+
+    await wrapper.setProps({
+      isOpen: true,
     });
 
     expect(wrapper.classes()).not.toContain('hidden');
   });
 
-  it('Should display "Cart is empty" when there are not products', () => {
-    const wrapper = mount(Cart);
+  it('Should display "Cart is empty" when there are not products', async () => {
+    const { wrapper } = mountCart();
+
+    wrapper.setProps({
+      products: [],
+    });
+
+    await Vue.nextTick();
 
     expect(wrapper.text()).toContain('Cart is empty');
   });
