@@ -91,6 +91,17 @@ describe('Cart', () => {
     expect(button.exists()).toBe(true);
   });
 
+  it('Should get default prop when props not provided', () => {
+    const cartManager = new CartManager();
+    const wrapper = mount(Cart, {
+      mocks: {
+        $cart: cartManager,
+      },
+    });
+
+    expect(wrapper.text()).toContain('Cart is empty');
+  });
+
   it('Should call cart manager removeProduct() when button gets clicked', async () => {
     const { wrapper, cartManager } = mountCart();
     const button = wrapper.find('[data-testid="clear-cart-button"]');
