@@ -39,6 +39,11 @@ context('Store', () => {
       g('@toggleButton').click({ force: true });
       gid('shopping-cart').should('have.class', 'hidden');
     });
+
+    it('Should open shopping cart when a product is added', () => {
+      gid('product-card').first().find('button').click();
+      gid('shopping-cart').should('not.have.class', 'hidden');
+    });
   });
 
   context('Store > Product List', () => {
