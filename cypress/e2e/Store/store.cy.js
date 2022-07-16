@@ -20,6 +20,31 @@ context('Store', () => {
     cy.get('body').contains('Wrist Watch');
   });
 
+  context.only('Store > Product List', () => {
+    it('Shoul display "0 Products" when no products is returned', () => {
+      cy.visit('http://localhost:3000');
+
+      cy.get('[data-testid="product-card"]').should('have.length', 0);
+      cy.get('body').contains('0 Products');
+    });
+
+    it('Shoul display "1 Product" when 1 product1 is returned', () => {
+      server.create('product', 1);
+      cy.visit('http://localhost:3000');
+
+      cy.get('[data-testid="product-card"]').should('have.length', 1);
+      cy.get('body').contains('1 Product');
+    });
+
+    it('Shoul display "10 products" when 10 are products is returned', () => {
+      server.createList('product', 10);
+      cy.visit('http://localhost:3000');
+
+      cy.get('[data-testid="product-card"]').should('have.length', 10);
+      cy.get('body').contains('10 Products');
+    });
+  });
+
   context('Store - Search for products', () => {
     it('Should type in the search field', () => {
       cy.visit('http://localhost:3000');
