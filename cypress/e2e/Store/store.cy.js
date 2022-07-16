@@ -22,16 +22,16 @@ context('Store', () => {
     g('body').contains('Wrist Watch');
   });
 
-  context('Store > Shopping Cart', () => {
-    it('Should not display shopping cart when page first loads', () => {
+  context.only('Store > Shopping Cart', () => {
+    beforeEach(() => {
+      server.createList('product', 10);
       cy.visit('/');
-
+    });
+    it('Should not display shopping cart when page first loads', () => {
       gid('shopping-cart').should('have.class', 'hidden');
     });
 
     it('Should toggle shopping cart visibility when button is clicked', () => {
-      cy.visit('/');
-
       gid('toggle-button').as('toggleButton');
       g('@toggleButton').click();
       gid('shopping-cart').should('not.have.class', 'hidden');
