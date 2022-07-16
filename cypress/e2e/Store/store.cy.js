@@ -29,7 +29,7 @@ context('Store', () => {
         .should('have.value', 'Some text here');
     });
 
-    it('Should type in the search field', () => {
+    it('Should return 1 product when "Relógio bonito" is used as search term', () => {
       server.create('product', {
         title: 'Relógio bonito',
       });
@@ -42,6 +42,17 @@ context('Store', () => {
       cy.get('[data-testid="search-form"]').submit();
 
       cy.get('[data-testid="product-card"]').should('have.length', 1);
+    });
+
+    it('Should not return any product', () => {
+      server.create('product', 10);
+
+      cy.visit('http://localhost:3000');
+
+      cy.get('input[type="search"]').type('Relógio bonito');
+      cy.get('[data-testid="search-form"]').submit();
+      cy.get('[data-testid="product-card"]').should('have.length', 0);
+      cy.get('body').contains('0 Products');
     });
   });
 });
