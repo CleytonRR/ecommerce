@@ -5,6 +5,7 @@ import { makeServer } from '../../../miragejs/server';
 context('Store', () => {
   let server;
   const g = cy.get;
+  const gid = cy.getByTestId;
 
   beforeEach(() => {
     server = makeServer({ environment: 'test' });
@@ -25,18 +26,18 @@ context('Store', () => {
     it('Should not display shopping cart when page first loads', () => {
       cy.visit('/');
 
-      g('[data-testid="shopping-cart"]').should('have.class', 'hidden');
+      gid('shopping-cart').should('have.class', 'hidden');
     });
 
     it('Should toggle shopping cart visibility when button is clicked', () => {
       cy.visit('/');
 
-      g('[data-testid="toggle-button"]').as('toggleButton');
+      gid('toggle-button').as('toggleButton');
       g('@toggleButton').click();
-      g('[data-testid="shopping-cart"]').should('not.have.class', 'hidden');
+      gid('shopping-cart').should('not.have.class', 'hidden');
 
       g('@toggleButton').click({ force: true });
-      g('[data-testid="shopping-cart"]').should('have.class', 'hidden');
+      gid('shopping-cart').should('have.class', 'hidden');
     });
   });
 
@@ -44,7 +45,7 @@ context('Store', () => {
     it('Shoul display "0 Products" when no products is returned', () => {
       cy.visit('/');
 
-      g('[data-testid="product-card"]').should('have.length', 0);
+      gid('product-card').should('have.length', 0);
       g('body').contains('0 Products');
     });
 
@@ -52,7 +53,7 @@ context('Store', () => {
       server.create('product', 1);
       cy.visit('/');
 
-      g('[data-testid="product-card"]').should('have.length', 1);
+      gid('product-card').should('have.length', 1);
       g('body').contains('1 Product');
     });
 
@@ -60,7 +61,7 @@ context('Store', () => {
       server.createList('product', 10);
       cy.visit('/');
 
-      g('[data-testid="product-card"]').should('have.length', 10);
+      gid('product-card').should('have.length', 10);
       g('body').contains('10 Products');
     });
   });
@@ -69,7 +70,7 @@ context('Store', () => {
     it('Should type in the search field', () => {
       cy.visit('/');
 
-      cy.get('input[type="search"]')
+      g('input[type="search"]')
         .type('Some text here')
         .should('have.value', 'Some text here');
     });
@@ -82,11 +83,11 @@ context('Store', () => {
 
       cy.visit('/');
 
-      cy.get('input[type="search"]').type('Relógio bonito');
+      g('input[type="search"]').type('Relógio bonito');
 
-      cy.get('[data-testid="search-form"]').submit();
+      gid('search-form').submit();
 
-      cy.get('[data-testid="product-card"]').should('have.length', 1);
+      gid('product-card').should('have.length', 1);
     });
 
     it('Should not return any product', () => {
@@ -94,10 +95,10 @@ context('Store', () => {
 
       cy.visit('/');
 
-      cy.get('input[type="search"]').type('Relógio bonito');
-      cy.get('[data-testid="search-form"]').submit();
-      cy.get('[data-testid="product-card"]').should('have.length', 0);
-      cy.get('body').contains('0 Products');
+      g('input[type="search"]').type('Relógio bonito');
+      gid('search-form').submit();
+      gid('product-card').should('have.length', 0);
+      g('body').contains('0 Products');
     });
   });
 });
