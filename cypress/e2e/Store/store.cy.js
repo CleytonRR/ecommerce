@@ -44,6 +44,11 @@ context('Store', () => {
       gid('product-card').first().find('button').click();
       gid('shopping-cart').should('not.have.class', 'hidden');
     });
+
+    it.only('Should add first product to the cart', () => {
+      gid('product-card').first().find('button').click();
+      gid('cart-item').should('have.length', 1);
+    });
   });
 
   context('Store > Product List', () => {
