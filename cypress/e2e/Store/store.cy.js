@@ -20,6 +20,14 @@ context('Store', () => {
     cy.get('body').contains('Wrist Watch');
   });
 
+  context.only('Store > Shopping Cart', () => {
+    it('Should not display shopping cart when page first loads', () => {
+      cy.visit('/');
+
+      cy.get('[data-testid="shopping-cart"]').should('have.class', 'hidden');
+    });
+  });
+
   context('Store > Product List', () => {
     it('Shoul display "0 Products" when no products is returned', () => {
       cy.visit('/');
