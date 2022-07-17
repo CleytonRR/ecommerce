@@ -66,6 +66,18 @@ context('Store', () => {
       cy.addToCart('all');
       gid('cart-item').should('have.length', quantity);
     });
+
+    it.only('Shoul remove a product from cart', () => {
+      cy.addToCart(2);
+
+      gid('cart-item').as('cartItems');
+
+      g('@cartItems').should('have.length', 1);
+
+      g('@cartItems').first().find('[data-testid="remove-button"]').click();
+
+      g('@cartItems').should('have.length', 0);
+    });
   });
 
   context('Store > Product List', () => {
