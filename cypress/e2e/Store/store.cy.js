@@ -45,9 +45,17 @@ context('Store', () => {
       gid('shopping-cart').should('not.have.class', 'hidden');
     });
 
-    it.only('Should add first product to the cart', () => {
+    it('Should add first product to the cart', () => {
       gid('product-card').first().find('button').click();
       gid('cart-item').should('have.length', 1);
+    });
+
+    it('Should add 3 products to the cart', () => {
+      gid('product-card').eq(1).find('button').click();
+      gid('product-card').eq(3).find('button').click({ force: true });
+      gid('product-card').eq(5).find('button').click({ force: true });
+
+      gid('cart-item').should('have.length', 3);
     });
   });
 
