@@ -42,6 +42,12 @@ context('Store', () => {
       gid('shopping-cart').should('have.class', 'hidden');
     });
 
+    it.only('Should display "Cart is empty" message when there are no products', () => {
+      gid('toggle-button').as('toggleButton');
+      g('@toggleButton').click();
+      gid('shopping-cart').contains('Cart is empty');
+    });
+
     it('Should open shopping cart when a product is added', () => {
       gid('product-card').first().find('button').click();
       gid('shopping-cart').should('not.have.class', 'hidden');
