@@ -22,7 +22,7 @@ context('Store', () => {
     g('body').contains('Wrist Watch');
   });
 
-  context.only('Store > Shopping Cart', () => {
+  context('Store > Shopping Cart', () => {
     const quantity = 10;
 
     beforeEach(() => {
@@ -42,7 +42,7 @@ context('Store', () => {
       gid('shopping-cart').should('have.class', 'hidden');
     });
 
-    it.only('Should display "Cart is empty" message when there are no products', () => {
+    it('Should display "Cart is empty" message when there are no products', () => {
       gid('toggle-button').as('toggleButton');
       g('@toggleButton').click();
       gid('shopping-cart').contains('Cart is empty');
@@ -73,7 +73,7 @@ context('Store', () => {
       gid('cart-item').should('have.length', quantity);
     });
 
-    it.only('Shoul remove a product from cart', () => {
+    it('Shoul remove a product from cart', () => {
       cy.addToCart(2);
 
       gid('cart-item').as('cartItems');
@@ -83,6 +83,14 @@ context('Store', () => {
       g('@cartItems').first().find('[data-testid="remove-button"]').click();
 
       g('@cartItems').should('have.length', 0);
+    });
+
+    it('Should clear cart when "Clear cart" button is clicked', () => {
+      cy.addToCart([1, 2, 3]);
+      gid('cart-item').should('have.length', 3);
+
+      gid('clear-cart-button').click();
+      gid('cart-item').should('have.length', 0);
     });
   });
 
