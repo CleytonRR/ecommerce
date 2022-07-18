@@ -45,7 +45,9 @@ describe('Cart', () => {
       },
     });
 
-    expect(wrapper.find('[data-testid="clear-cart-button]').exists).toBe(false);
+    expect(wrapper.find('[data-testid="clear-cart-button]').exists()).toBe(
+      false
+    );
   });
 
   it('Should emit close event when button gets clicked', async () => {
