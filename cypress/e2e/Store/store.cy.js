@@ -42,7 +42,7 @@ context('Store', () => {
       gid('shopping-cart').should('have.class', 'hidden');
     });
 
-    it.only('Should not display "Clear cart" button when cart is empty', () => {
+    it('Should not display "Clear cart" button when cart is empty', () => {
       gid('toggle-button').as('toggleButton');
       g('@toggleButton').click();
       gid('clear-cart-button').should('not.exist');
@@ -77,6 +77,38 @@ context('Store', () => {
     it('Should add all products to the cart', () => {
       cy.addToCart('all');
       gid('cart-item').should('have.length', quantity);
+    });
+
+    it('Should display quantity 1 when product is added to cart', () => {
+      cy.addToCart(1);
+      gid('quantity').contains(1);
+    });
+
+    it('Should increase quantity when button + gets clicked', () => {
+      cy.addToCart(1);
+      gid('quantity').contains(1);
+      gid('+').click();
+      gid('quantity').contains(2);
+      gid('+').click();
+      gid('quantity').contains(3);
+    });
+
+    it('Should decrease quantity when button - gets clicked', () => {
+      cy.addToCart(1);
+      gid('+').click();
+      gid('+').click();
+      gid('quantity').contains(3);
+      gid('-').click();
+      gid('quantity').contains(2);
+      gid('-').click();
+      gid('quantity').contains(1);
+    });
+
+    it('Should not decrease below zero when button - gets clicked', () => {
+      cy.addToCart(1);
+      gid('-').click();
+      gid('-').click();
+      gid('quantity').contains(0);
     });
 
     it('Shoul remove a product from cart', () => {
