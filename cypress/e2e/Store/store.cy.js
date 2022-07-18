@@ -42,6 +42,12 @@ context('Store', () => {
       gid('shopping-cart').should('have.class', 'hidden');
     });
 
+    it.only('Should not display "Clear cart" button when cart is empty', () => {
+      gid('toggle-button').as('toggleButton');
+      g('@toggleButton').click();
+      gid('clear-cart-button').should('not.exist');
+    });
+
     it('Should display "Cart is empty" message when there are no products', () => {
       gid('toggle-button').as('toggleButton');
       g('@toggleButton').click();
