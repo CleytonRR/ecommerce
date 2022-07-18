@@ -1,20 +1,83 @@
-# watch-store
 
-## Build Setup
+# Watch Store - Vue :fire:
+
+Projeto feito utilizando Vue(nuxt) que tem como objetivo a construção de um E-commerce.
+A proposta é a criação e a utilização de testes, tanto unitários, integrações e End-to-end
+
+
+
+## Stack utilizada
+
+**Front-end:** Vuejs, Nuxtjs, TailwindCSS, Miragejs, Cypress, Jest
+
+
+
+
+
+## Aprendizados
+
+Utilização de TDD no front, jest, testes de integrações e Cypress, e também a utilização de Vuejs e nuxtjs
+
+
+
+
+
+
+## Demonstração
+
+![Aplicação](project.gif)
+
+
+## Rodando os testes
+
+Para rodar os testes, rode o seguinte comando
+
+testes unitários:
 
 ```bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
+  yarn test
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+para rodar o coverage
+
+```bash
+  yarn test:coverage
+```
+
+Para teste de End-to-End
+
+```bash
+  yarn test:e2e
+```
+
+
+## Rodando localmente
+
+Clone o projeto
+
+```bash
+  git clone https://link-para-o-projeto
+```
+
+Entre no diretório do projeto
+
+```bash
+  cd my-project
+```
+
+Instale as dependências
+
+```bash
+  npm install
+```
+
+Inicie o servidor
+
+```bash
+  npm run start
+```
+
+
+
+
+
