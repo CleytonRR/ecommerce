@@ -12,4 +12,4 @@ on:
 
       steps:
         - name: Say Hello to the World!
-          run: echo 'Hello World!'
+          run: echo 'Hello World! Update'
