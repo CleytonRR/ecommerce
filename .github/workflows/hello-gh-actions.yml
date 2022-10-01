@@ -12,4 +12,17 @@ jobs:
 
     steps:
       - name: Say Hello to the World!
-        run: echo 'Hello World! Update'
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.14.x
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile --prefer-offline
+
+      - name: Run Jest tests
+        run: yarn test
