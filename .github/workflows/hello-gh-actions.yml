@@ -11,7 +11,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Say Hello to the World!
+      - name: Checkout repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -26,3 +26,6 @@ jobs:
 
       - name: Run Jest tests
         run: yarn test
+
+      - name: Run Linter
+        run: yarn lint
