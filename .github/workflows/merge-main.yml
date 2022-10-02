@@ -2,7 +2,7 @@ name: merge-main
 
 on:
   push:
-    branchs:
+    branches:
       - main
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
         id: yarn-cache
         with:
           path: '**/node_modules'
-          keys: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-key: /
             ${{ runner.os }}-yarn-
 
